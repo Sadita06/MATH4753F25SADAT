@@ -1,0 +1,150 @@
+---
+title: "What the package does"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{What the package does}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(MATH4753F25SADAT)
+```
+
+
+# Introduction
+This R package contains a collection of functions that was collected over the course of Applied Statistical Methods. This will demonstrate how each function works and will display a result for each of them.
+
+# The first function: myncurve()
+
+This function accepts three values: mu, sigma, and a.
+
+
+mu - represents the mean of the normal distribution
+
+
+sigma - represents the standard deviation
+
+
+a - is a cut-off value (or x value) where the area under a curve will be shaded
+
+
+The function then produces two outputs:
+
+1) A plot of the normal distribution with the area from $-\infty$ to 'a' shaded
+
+
+2) A list containing the input values and the calculated probability
+
+This is an example of the function being used:
+```{r}
+MATH4753F25SADAT::myncurve(mu=0,sigma=5, a = 6)
+```
+
+
+
+# The second function: mycltu()
+This function accepts four inputs: n, iter, a, and b
+
+
+n - represents the sample size used in each iteration
+
+
+iter - represents the number of samples generated
+
+a and b - represents the lower and upper bounds of the Uniform distribution
+
+The function simulates the sampling distribution of the sample mean using a Uniform distribution. For each iteration, n values are randomly generated from the Uniform (a.b) distribution and their mean is computed. This process is repeated 'iter' times.
+
+
+The function produces a histogram of the sample means.
+
+
+This is an example of the function being used:
+```{r}
+MATH4753F25SADAT::mycltu(n = 20, iter = 10000, a = 0, b = 10)
+```
+
+# The third function: mybin()
+This function accepts three inputs: iter, n, and p
+
+
+iter - represents the number of simulations to be performed
+
+
+n - represents the number of trials in each experiment
+
+
+p - represents the probability of success for each trial
+
+
+This function simulates a Binomial random process by repeatedly sampling 'n' Bernoulli trials with success probability 'p'. For each iteration, the number of successes is recorded. The process is repeated 'iter' times, producing a distribution of the number of successes.
+
+
+The function creates:
+
+1) A table of proportions for each possible number of successes from 0 to 'n'
+
+
+2) A bar plot showing the empirical distribution of successes across all simulations
+
+
+This is an example of the function being used:
+
+```{r}
+MATH4753F25SADAT::mybin(iter = 1000, n = 10, p = 0.5)
+```
+
+
+
+# The fourth function: mymaxlik()
+
+The function accepts three inputs: lfun, x, and param along with optional graphical parameters (...)
+
+
+x - represents the observed data
+
+
+param - a vector of parameter values to be tested
+
+
+lfun - a user-defined log-likelihood function that evaluates the log-likelihood for each data point
+
+
+The function computes the log-likelihood for each value in 'param' by applying the log-likelihood function to every obeservation in 'x' and summing the results. These summed log-likelihood values are then plotted against the parameter values to produce a log-likelihood curve
+
+
+The function identifies the maximum likelihood estimate (MLE) by locating the parameter value that produces the largest log-likelihood.
+
+
+The function returns a list containing:
+
+
+i: the index of the maximum log-likelihood
+
+
+parami: the parameter value at the maximum
+
+
+yi: the log-likelihood value at the maximum
+
+
+slope: an estimate of the slope near the maximum
+
+
+This is an example of the function being used:
+
+```{r}
+data <- c(3,4,3,5)
+MATH4753F25SADAT::mymaxlik(x=data, param=seq(0,20,length=1000),
+                   lfun=function(x,p) log(dpois(x,lambda=p)),
+                   xlab=expression(lambda), main="Poisson MLE Example")
+```
+
